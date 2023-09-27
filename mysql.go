@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"gitee.com/baixudong/bson"
+	"gitee.com/baixudong/gson"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -146,7 +146,7 @@ func (obj *Client) Insert(ctx context.Context, table string, datas ...any) error
 	for _, data := range datas {
 		names := []string{}
 		values := []any{}
-		jsonData, err := bson.Decode(data)
+		jsonData, err := gson.Decode(data)
 		if err != nil {
 			return err
 		}
