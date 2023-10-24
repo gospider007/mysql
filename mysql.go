@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"gitee.com/baixudong/gson"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/gospider007/gson"
 )
 
 type ClientOption struct {
