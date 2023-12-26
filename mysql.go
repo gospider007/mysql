@@ -67,7 +67,7 @@ func (obj *Rows) Data() map[string]any {
 	obj.rows.Scan(result...)
 	maprs := map[string]any{}
 	for k, v := range obj.names {
-		maprs[v] = result[k]
+		maprs[v] = reflect.ValueOf(result[k]).Elem().Interface()
 	}
 	return maprs
 }
@@ -182,7 +182,25 @@ func (obj *Client) Finds(ctx context.Context, query string, args ...any) (*Rows,
 	kinds := make([]reflect.Type, len(cols))
 	for coln, col := range cols {
 		names[coln] = col.Name()
-		kinds[coln] = col.ScanType()
+		if strings.HasSuffix(col.DatabaseTypeName(), "INT") || strings.HasPrefix(col.DatabaseTypeName(), "INT") {
+			kinds[coln] = reflect.TypeOf(int64(0))
+		} else if strings.HasSuffix(col.DatabaseTypeName(), "CHAR") || strings.HasSuffix(col.DatabaseTypeName(), "TEXT") {
+			kinds[coln] = reflect.TypeOf("")
+		} else if strings.HasSuffix(col.DatabaseTypeName(), "BLOB") {
+			kinds[coln] = reflect.TypeOf([]byte{})
+		} else {
+			switch col.DatabaseTypeName() {
+			case "DATE", "TIME", "YEAR", "DATETIME", "TIMESTAMP":
+				kinds[coln] = reflect.TypeOf("")
+			case "DECIMAL", "FLOAT", "DOUBLE":
+				kinds[coln] = reflect.TypeOf(float64(0))
+			case "BOOL":
+				kinds[coln] = reflect.TypeOf(false)
+			default:
+				fmt.Println("not support type:", col.DatabaseTypeName())
+				kinds[coln] = col.ScanType()
+			}
+		}
 	}
 	return &Rows{
 		names: names,
