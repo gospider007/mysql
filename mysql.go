@@ -139,30 +139,40 @@ func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 }
 
 // insert  ?  is args
-func (obj *Client) Insert(ctx context.Context, table string, datas ...any) error {
+func (obj *Client) Inserts(ctx context.Context, table string, datas ...any) ([]*Result, error) {
 	if ctx == nil {
 		ctx = context.TODO()
 	}
+	results := []*Result{}
 	for _, data := range datas {
-		names := []string{}
-		values := []any{}
-		jsonData, err := gson.Decode(data)
+		result, err := obj.Insert(ctx, table, data)
 		if err != nil {
-			return err
+			return results, err
 		}
-		for k, v := range jsonData.Map() {
-			names = append(names, k)
-			values = append(values, v.Value())
-		}
-		indexs := make([]string, len(names))
-		for i := range names {
-			indexs[i] = "?"
-		}
-		if _, err := obj.Exec(ctx, fmt.Sprintf("insert into %s (%s) values (%s)", table, strings.Join(names, ","), strings.Join(indexs, ",")), values...); err != nil {
-			return err
-		}
+		results = append(results, result)
 	}
-	return nil
+	return results, nil
+}
+
+func (obj *Client) Insert(ctx context.Context, table string, data any) (*Result, error) {
+	if ctx == nil {
+		ctx = context.TODO()
+	}
+	names := []string{}
+	values := []any{}
+	jsonData, err := gson.Decode(data)
+	if err != nil {
+		return nil, err
+	}
+	for k, v := range jsonData.Map() {
+		names = append(names, k)
+		values = append(values, v.Value())
+	}
+	indexs := make([]string, len(names))
+	for i := range names {
+		indexs[i] = "?"
+	}
+	return obj.Exec(ctx, fmt.Sprintf("insert into %s (%s) values (%s)", table, strings.Join(names, ","), strings.Join(indexs, ",")), values...)
 }
 
 // finds   ?  is args
