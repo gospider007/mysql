@@ -8,9 +8,9 @@ require (
 )
 
 require (
-	github.com/andybalholm/brotli v1.0.6 // indirect
+	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/gospider007/kinds v0.0.0-20231024093643-7a4424f2d30e // indirect
-	github.com/gospider007/re v0.0.0-20231024115818-adfd03636256 // indirect
+	github.com/gospider007/re v0.0.0-20240123115159-a22d0a50604f // indirect
 	github.com/gospider007/tools v0.0.0-20231202084937-8b2bc66f8198 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect

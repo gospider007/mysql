@@ -138,31 +138,22 @@ func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 	return &Client{db: db}, nil
 }
 
-// insert  ?  is args
-func (obj *Client) Inserts(ctx context.Context, table string, datas ...any) ([]*Result, error) {
+func (obj *Client) Insert(ctx context.Context, table string, data ...any) (*Result, error) {
 	if ctx == nil {
 		ctx = context.TODO()
 	}
-	results := []*Result{}
-	for _, data := range datas {
-		result, err := obj.Insert(ctx, table, data)
-		if err != nil {
-			return results, err
-		}
-		results = append(results, result)
+	names, indexs, values, err := obj.parseInserts(data...)
+	if err != nil {
+		return nil, err
 	}
-	return results, nil
+	return obj.Exec(ctx, fmt.Sprintf("insert into %s %s values %s", table, names, indexs), values...)
 }
-
-func (obj *Client) Insert(ctx context.Context, table string, data any) (*Result, error) {
-	if ctx == nil {
-		ctx = context.TODO()
-	}
+func (obj *Client) parseInsert(data any) (string, string, []any, error) {
 	names := []string{}
 	values := []any{}
 	jsonData, err := gson.Decode(data)
 	if err != nil {
-		return nil, err
+		return "", "", nil, err
 	}
 	for k, v := range jsonData.Map() {
 		names = append(names, k)
@@ -172,7 +163,22 @@ func (obj *Client) Insert(ctx context.Context, table string, data any) (*Result,
 	for i := range names {
 		indexs[i] = "?"
 	}
-	return obj.Exec(ctx, fmt.Sprintf("insert into %s (%s) values (%s)", table, strings.Join(names, ","), strings.Join(indexs, ",")), values...)
+	return fmt.Sprintf("[%s]", strings.Join(names, ", ")), fmt.Sprintf("[%s]", strings.Join(indexs, ", ")), values, nil
+}
+func (obj *Client) parseInserts(data ...any) (string, string, []any, error) {
+	names := []string{}
+	values := []any{}
+	indexs := []string{}
+	for _, d := range data {
+		name, index, value, err := obj.parseInsert(d)
+		if err != nil {
+			return "", "", nil, err
+		}
+		names = append(names, name)
+		indexs = append(indexs, index)
+		values = append(values, value...)
+	}
+	return fmt.Sprintf("(%s)", strings.Join(names, ", ")), fmt.Sprintf("(%s)", strings.Join(indexs, ", ")), values, nil
 }
 
 // finds   ?  is args
