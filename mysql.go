@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/url"
 	"reflect"
+	"slices"
 	"strings"
 	"time"
 
@@ -146,39 +147,54 @@ func (obj *Client) Insert(ctx context.Context, table string, data ...any) (*Resu
 	if err != nil {
 		return nil, err
 	}
-	return obj.Exec(ctx, fmt.Sprintf("insert into %s %s values %s", table, names, indexs), values...)
+	return obj.Exec(ctx, fmt.Sprintf("insert ignore into %s %s values %s", table, names, indexs), values...)
 }
-func (obj *Client) parseInsert(data any) (string, string, []any, error) {
-	names := []string{}
+func (obj *Client) parseInsert(data map[string]any, keys []string) (string, []any) {
 	values := []any{}
-	jsonData, err := gson.Decode(data)
+	indexs := make([]string, len(keys))
+	for i, k := range keys {
+		v := data[k]
+		values = append(values, v)
+		indexs[i] = "?"
+	}
+	return fmt.Sprintf("(%s)", strings.Join(indexs, ", ")), values
+}
+
+func (obj *Client) parseInsertKeys(data ...any) ([]map[string]any, []string, error) {
+	values := []map[string]any{}
+	keys := []string{}
+	for _, d := range data {
+		jsonData, err := gson.Decode(d)
+		if err != nil {
+			return nil, nil, err
+		}
+		value := map[string]any{}
+		for key, val := range jsonData.Map() {
+			value[key] = val.Value()
+			if !slices.Contains(keys, key) {
+				keys = append(keys, key)
+			}
+		}
+		values = append(values, value)
+	}
+
+	return values, keys, nil
+}
+func (obj *Client) parseInserts(data ...any) (string, string, []any, error) {
+	datas, names, err := obj.parseInsertKeys(data...)
 	if err != nil {
 		return "", "", nil, err
 	}
-	for k, v := range jsonData.Map() {
-		names = append(names, k)
-		values = append(values, v.Value())
-	}
-	indexs := make([]string, len(names))
-	for i := range names {
-		indexs[i] = "?"
-	}
-	return fmt.Sprintf("[%s]", strings.Join(names, ", ")), fmt.Sprintf("[%s]", strings.Join(indexs, ", ")), values, nil
-}
-func (obj *Client) parseInserts(data ...any) (string, string, []any, error) {
-	names := []string{}
 	values := []any{}
 	indexs := []string{}
-	for _, d := range data {
-		name, index, value, err := obj.parseInsert(d)
-		if err != nil {
-			return "", "", nil, err
-		}
-		names = append(names, name)
+
+	for _, d := range datas {
+		index, value := obj.parseInsert(d, names)
 		indexs = append(indexs, index)
 		values = append(values, value...)
 	}
-	return fmt.Sprintf("(%s)", strings.Join(names, ", ")), fmt.Sprintf("(%s)", strings.Join(indexs, ", ")), values, nil
+	return fmt.Sprintf("(%s)", strings.Join(names, ", ")), strings.Join(indexs, ", "), values, nil
+	// return fmt.Sprintf("(%s)", strings.Join(names, ", ")), fmt.Sprintf("(%s)", strings.Join(indexs, ", ")), values, nil
 }
 
 // finds   ?  is args
