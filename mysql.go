@@ -149,6 +149,13 @@ func (obj *Client) Insert(ctx context.Context, table string, data ...any) (*Resu
 	}
 	return obj.Exec(ctx, fmt.Sprintf("insert ignore into %s %s values %s", table, names, indexs), values...)
 }
+func (obj *Client) InsertWithValues(ctx context.Context, table string, data ...[]any) (*Result, error) {
+	if ctx == nil {
+		ctx = context.TODO()
+	}
+	indexs, values := obj.parseInsertWithValues(data...)
+	return obj.Exec(ctx, fmt.Sprintf("insert ignore into %s values %s;", table, indexs), values...)
+}
 func (obj *Client) parseInsert(data map[string]any, keys []string) (string, []any) {
 	values := []any{}
 	indexs := make([]string, len(keys))
@@ -158,6 +165,19 @@ func (obj *Client) parseInsert(data map[string]any, keys []string) (string, []an
 		indexs[i] = "?"
 	}
 	return fmt.Sprintf("(%s)", strings.Join(indexs, ", ")), values
+}
+func (obj *Client) parseInsertWithValues(values ...[]any) (string, []any) {
+	indexs := make([]string, len(values))
+	vvs := []any{}
+	for i, vs := range values {
+		index := make([]string, len(vs))
+		for j, v := range vs {
+			index[j] = "?"
+			vvs = append(vvs, v)
+		}
+		indexs[i] = fmt.Sprintf("(%s)", strings.Join(index, ", "))
+	}
+	return strings.Join(indexs, ", "), vvs
 }
 
 func (obj *Client) parseInsertKeys(data ...any) ([]map[string]any, []string, error) {
