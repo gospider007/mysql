@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"database/sql/driver"
 	"fmt"
-	"log"
 	"net/url"
 	"reflect"
 	"slices"
@@ -66,12 +65,15 @@ type AnyValue interface {
 }
 
 // 返回游标的数据
-func (obj *Rows) Data() map[string]any {
+func (obj *Rows) Data() (map[string]any, error) {
 	result := make([]any, len(obj.kinds))
 	for k, v := range obj.kinds {
 		result[k] = reflect.New(v).Interface()
 	}
-	obj.rows.Scan(result...)
+	err := obj.rows.Scan(result...)
+	if err != nil {
+		return nil, err
+	}
 	maprs := map[string]any{}
 	for k, v := range obj.names {
 		val := reflect.ValueOf(result[k]).Elem().Interface()
@@ -79,14 +81,14 @@ func (obj *Rows) Data() map[string]any {
 		if ok {
 			value, err := anyVal.Value()
 			if err != nil {
-				log.Panic(err)
+				return maprs, err
 			}
 			maprs[v] = value
 		} else {
 			maprs[v] = val
 		}
 	}
-	return maprs
+	return maprs, nil
 }
 
 // 关闭游标
