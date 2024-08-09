@@ -154,7 +154,11 @@ func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 	db.SetConnMaxLifetime(option.MaxLifeTime)
 	db.SetMaxOpenConns(option.MaxConns)
 	db.SetMaxIdleConns(option.MaxConns)
-	return &Client{db: db}, nil
+	return NewClientWithSqlDB(db), nil
+}
+
+func NewClientWithSqlDB(db *sql.DB) *Client {
+	return &Client{db: db}
 }
 
 func (obj *Client) Insert(ctx context.Context, table string, data ...any) (*Result, error) {
