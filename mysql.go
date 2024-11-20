@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"database/sql/driver"
 	"fmt"
+	"iter"
 	"net/url"
 	"reflect"
 	"slices"
@@ -60,19 +61,32 @@ func (obj *Rows) Next() bool {
 	}
 }
 
+// 遍历
+func (obj *Rows) Range() iter.Seq[map[string]any] {
+	return func(yield func(map[string]any) bool) {
+		defer obj.Close()
+		for obj.Next() {
+			if !yield(obj.Map()) {
+				return
+			}
+		}
+	}
+}
+
 type AnyValue interface {
 	Value() (driver.Value, error)
 }
 
 // 返回游标的数据
-func (obj *Rows) Data() (map[string]any, error) {
+func (obj *Rows) Map() map[string]any {
 	result := make([]any, len(obj.kinds))
 	for k, v := range obj.kinds {
 		result[k] = reflect.New(v).Interface()
 	}
 	err := obj.rows.Scan(result...)
 	if err != nil {
-		return nil, err
+		obj.Close()
+		return nil
 	}
 	maprs := map[string]any{}
 	for k, v := range obj.names {
@@ -81,14 +95,15 @@ func (obj *Rows) Data() (map[string]any, error) {
 		if ok {
 			value, err := anyVal.Value()
 			if err != nil {
-				return maprs, err
+				obj.Close()
+				return maprs
 			}
 			maprs[v] = value
 		} else {
 			maprs[v] = val
 		}
 	}
-	return maprs, nil
+	return maprs
 }
 
 // 关闭游标
@@ -134,7 +149,7 @@ func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 		if option.DbName != "" {
 			openAddr += option.DbName
 		}
-		if option.Params != nil && len(option.Params) > 0 {
+		if len(option.Params) > 0 {
 			value := url.Values{}
 			for k, v := range option.Params {
 				value.Add(k, v)
@@ -169,14 +184,14 @@ func (obj *Client) Insert(ctx context.Context, table string, data ...any) (*Resu
 	if err != nil {
 		return nil, err
 	}
-	return obj.Exec(ctx, fmt.Sprintf("insert ignore into %s %s values %s", table, names, indexs), values...)
+	return obj.Exec(ctx, fmt.Sprintf("insert into %s %s values %s", table, names, indexs), values...)
 }
 func (obj *Client) InsertWithValues(ctx context.Context, table string, data ...[]any) (*Result, error) {
 	if ctx == nil {
 		ctx = context.TODO()
 	}
 	indexs, values := obj.parseInsertWithValues(data...)
-	return obj.Exec(ctx, fmt.Sprintf("insert ignore into %s values %s;", table, indexs), values...)
+	return obj.Exec(ctx, fmt.Sprintf("insert into %s values %s;", table, indexs), values...)
 }
 func (obj *Client) parseInsert(data map[string]any, keys []string) (string, []any) {
 	values := []any{}
