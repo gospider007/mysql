@@ -6,14 +6,17 @@ import (
 	"database/sql/driver"
 	"fmt"
 	"iter"
+	"net"
 	"net/url"
 	"reflect"
 	"slices"
 	"strings"
 	"time"
 
-	_ "github.com/go-sql-driver/mysql"
+	mysqlDriver "github.com/go-sql-driver/mysql"
 	"github.com/gospider007/gson"
+	"github.com/gospider007/gtls"
+	"github.com/gospider007/requests"
 )
 
 type ClientOption struct {
@@ -28,6 +31,7 @@ type ClientOption struct {
 	MaxConns    int               //最大连接数
 	MaxLifeTime time.Duration     //最大活跃数
 	Params      map[string]string //附加参数
+	Socks5Proxy string
 }
 type Client struct {
 	db *sql.DB
@@ -110,7 +114,6 @@ func (obj *Rows) Map() map[string]any {
 func (obj *Rows) Close() error {
 	return obj.rows.Close()
 }
-
 func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 	var option ClientOption
 	if len(options) > 0 {
@@ -121,6 +124,16 @@ func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 	}
 	if option.DriverName == "" {
 		option.DriverName = "mysql"
+	}
+	if option.Socks5Proxy != "" {
+		proxy, err := gtls.VerifyProxy(option.Socks5Proxy)
+		if err != nil {
+			return nil, err
+		}
+		dialer := requests.NewDail(requests.DialOption{})
+		mysqlDriver.RegisterDialContext("tcp", func(ctx context.Context, addr string) (net.Conn, error) {
+			return dialer.Socks5Proxy(ctx, nil, "tcp", proxy, &url.URL{Host: addr})
+		})
 	}
 	if option.MaxConns == 0 {
 		option.MaxConns = 65535
