@@ -130,7 +130,7 @@ func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 		if err != nil {
 			return nil, err
 		}
-		dialer := requests.NewDail(requests.DialOption{})
+		dialer := &requests.Dialer{}
 		mysqlDriver.RegisterDialContext("tcp", func(ctx context.Context, addr string) (net.Conn, error) {
 			return dialer.Socks5Proxy(ctx, nil, "tcp", proxy, &url.URL{Host: addr})
 		})
