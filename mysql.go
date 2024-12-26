@@ -305,6 +305,28 @@ func (obj *Client) Exec(ctx context.Context, query string, args ...any) (*Result
 	return &Result{result: exeResult}, nil
 }
 
+// 执行
+func (obj *Client) Update(ctx context.Context, table string, data any, where string, args ...any) (*Result, error) {
+	if ctx == nil {
+		ctx = context.TODO()
+	}
+	jsonData, err := gson.Decode(data)
+	if err != nil {
+		return nil, err
+	}
+	names := []string{}
+	values := []any{}
+	for key, val := range jsonData.Map() {
+		names = append(names, fmt.Sprintf("%s=?", key))
+		values = append(values, val.Value())
+	}
+	exeResult, err := obj.db.ExecContext(ctx, fmt.Sprintf("update %s set %s where %s", table, strings.Join(names, ", "), where), append(values, args...)...)
+	if err != nil {
+		return nil, err
+	}
+	return &Result{result: exeResult}, nil
+}
+
 // 关闭客户端
 func (obj *Client) Close() error {
 	return obj.db.Close()
