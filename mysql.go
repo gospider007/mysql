@@ -318,6 +318,9 @@ func (obj *Client) Update(ctx context.Context, table string, data any, where str
 	if ctx == nil {
 		ctx = context.TODO()
 	}
+	if where == "" {
+		return nil, fmt.Errorf("where is empty")
+	}
 	jsonData, err := gson.Decode(data)
 	if err != nil {
 		return nil, err
@@ -333,6 +336,51 @@ func (obj *Client) Update(ctx context.Context, table string, data any, where str
 		return nil, err
 	}
 	return &Result{result: exeResult}, nil
+}
+
+// 执行
+func (obj *Client) Exists(ctx context.Context, table string, where string, args ...any) (bool, error) {
+	if ctx == nil {
+		ctx = context.TODO()
+	}
+	if where == "" {
+		return false, fmt.Errorf("where is empty")
+	}
+	exeResult, err := obj.Finds(ctx, fmt.Sprintf("select 1 from %s where %s limit 1", table, where), args...)
+	if err != nil {
+		return false, err
+	}
+	var exists bool
+	for range exeResult.Range() {
+		exists = true
+		break
+	}
+	return exists, nil
+}
+
+// 执行
+func (obj *Client) UpSert(ctx context.Context, table string, data any, where string, args ...any) (*Result, error) {
+	if ctx == nil {
+		ctx = context.TODO()
+	}
+	results, err := obj.Update(ctx, table, data, where, args...)
+	if err != nil {
+		return nil, err
+	}
+	i, err := results.RowsAffected()
+	if err != nil {
+		return nil, err
+	}
+	if i == 0 {
+		exists, err := obj.Exists(ctx, table, where, args...)
+		if err != nil {
+			return nil, err
+		}
+		if !exists {
+			return obj.Insert(ctx, table, data)
+		}
+	}
+	return results, nil
 }
 
 // 关闭客户端
