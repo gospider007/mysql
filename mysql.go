@@ -140,7 +140,7 @@ func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 			if err != nil {
 				return nil, err
 			}
-			return dialer.Socks5TcpProxy(ctx, nil, proxyAddress, remoteAdress)
+			return dialer.Socks5TcpProxy(requests.NewResponse(ctx, requests.RequestOption{}), proxyAddress, remoteAdress)
 		})
 	}
 	if option.MaxConns == 0 {
