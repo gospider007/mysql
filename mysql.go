@@ -130,12 +130,15 @@ func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 		if err != nil {
 			return nil, err
 		}
+		proxyAddress, err := requests.GetAddressWithUrl(proxy)
+		if err != nil {
+			return nil, err
+		}
+		if proxyAddress.Scheme != "socks5" {
+			return nil, fmt.Errorf("only support socks5 proxy")
+		}
 		dialer := &requests.Dialer{}
 		mysqlDriver.RegisterDialContext("tcp", func(ctx context.Context, addr string) (net.Conn, error) {
-			proxyAddress, err := requests.GetAddressWithUrl(proxy)
-			if err != nil {
-				return nil, err
-			}
 			remoteAdress, err := requests.GetAddressWithAddr(addr)
 			if err != nil {
 				return nil, err
