@@ -36,7 +36,7 @@ require (
 	github.com/gospider007/bs4 v0.0.0-20250413121342-fed910fb00c9 // indirect
 	github.com/gospider007/http2 v0.0.0-20250427082905-4aed0707e580 // indirect
 	github.com/gospider007/http3 v0.0.0-20250416085920-b642f3f91f47 // indirect
-	github.com/gospider007/ja3 v0.0.0-20250427082442-f7dc5fb959e6 // indirect
+	github.com/gospider007/ja3 v0.0.0-20250615121404-6d7f30dfa700 // indirect
 	github.com/gospider007/kinds v0.0.0-20250217075226-10f199f7215d // indirect
 	github.com/gospider007/re v0.0.0-20250217075352-bcb79f285d6c // indirect
 	github.com/gospider007/tools v0.0.0-20250413121648-446528a36c44 // indirect
@@ -77,7 +77,7 @@ require (
 	go.uber.org/zap/exp v0.3.0 // indirect
 	go4.org v0.0.0-20230225012048-214862532bf5 // indirect
 	golang.org/x/crypto v0.39.0 // indirect
-	golang.org/x/exp v0.0.0-20250606033433-dcc06ee1d476 // indirect
+	golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b // indirect
 	golang.org/x/image v0.28.0 // indirect
 	golang.org/x/mod v0.25.0 // indirect
 	golang.org/x/net v0.41.0 // indirect
