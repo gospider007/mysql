@@ -4,9 +4,9 @@ go 1.24.0
 
 require (
 	github.com/go-sql-driver/mysql v1.9.3
-	github.com/gospider007/gson v0.0.0-20250630120534-cce6e3c6756d
-	github.com/gospider007/gtls v0.0.0-20250630120509-4e99c91661ee
-	github.com/gospider007/requests v0.0.0-20250711035433-45c7a3262f0d
+	github.com/gospider007/gson v0.0.0-20250718004537-ff15820964bd
+	github.com/gospider007/gtls v0.0.0-20250718003831-90cdeb97a23f
+	github.com/gospider007/requests v0.0.0-20250718091032-bd77e8a316b9
 )
 
 require (
@@ -20,7 +20,6 @@ require (
 	github.com/bodgit/windows v1.0.1 // indirect
 	github.com/caddyserver/certmagic v0.23.0 // indirect
 	github.com/caddyserver/zerossl v0.1.3 // indirect
-	github.com/cloudflare/circl v1.6.1 // indirect
 	github.com/dsnet/compress v0.0.2-0.20230904184137-39efe44ab707 // indirect
 	github.com/gaukas/clienthellod v0.4.2 // indirect
 	github.com/gaukas/godicttls v0.0.4 // indirect
@@ -34,13 +33,14 @@ require (
 	github.com/gospider007/bar v0.0.0-20250217074946-47896d8de2ba // indirect
 	github.com/gospider007/blog v0.0.0-20250302134054-8afc12c2a9a7 // indirect
 	github.com/gospider007/bs4 v0.0.0-20250413121342-fed910fb00c9 // indirect
-	github.com/gospider007/http2 v0.0.0-20250711035043-daabc8e205b3 // indirect
-	github.com/gospider007/http3 v0.0.0-20250711035127-be7539ebc56a // indirect
+	github.com/gospider007/http1 v0.0.0-20250718091014-9ea72dfb1370 // indirect
+	github.com/gospider007/http2 v0.0.0-20250718004700-7af5b064e352 // indirect
+	github.com/gospider007/http3 v0.0.0-20250718004757-02ceb5fa2d6e // indirect
 	github.com/gospider007/ja3 v0.0.0-20250627013834-1d2966014638 // indirect
 	github.com/gospider007/kinds v0.0.0-20250217075226-10f199f7215d // indirect
 	github.com/gospider007/re v0.0.0-20250217075352-bcb79f285d6c // indirect
-	github.com/gospider007/tools v0.0.0-20250711035142-241d6041da43 // indirect
-	github.com/gospider007/websocket v0.0.0-20250630120328-1ec26253d082 // indirect
+	github.com/gospider007/tools v0.0.0-20250718003809-7c62cd0ee920 // indirect
+	github.com/gospider007/websocket v0.0.0-20250718010025-4c017acfd478 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
@@ -56,11 +56,12 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/nwaples/rardecode/v2 v2.1.1 // indirect
 	github.com/onsi/ginkgo/v2 v2.23.4 // indirect
+	github.com/onsi/gomega v1.37.0 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
 	github.com/quic-go/qpack v0.5.1 // indirect
-	github.com/quic-go/quic-go v0.53.0 // indirect
+	github.com/quic-go/quic-go v0.54.0 // indirect
 	github.com/refraction-networking/uquic v0.0.6 // indirect
-	github.com/refraction-networking/utls v1.7.4-0.20250621163342-5abccec539e6 // indirect
+	github.com/refraction-networking/utls v1.8.0 // indirect
 	github.com/sorairolake/lzip-go v0.3.7 // indirect
 	github.com/spf13/afero v1.14.0 // indirect
 	github.com/tidwall/gjson v1.18.0 // indirect
@@ -77,7 +78,7 @@ require (
 	go.uber.org/zap/exp v0.3.0 // indirect
 	go4.org v0.0.0-20230225012048-214862532bf5 // indirect
 	golang.org/x/crypto v0.40.0 // indirect
-	golang.org/x/exp v0.0.0-20250717185816-542afb5b7346 // indirect
+	golang.org/x/exp v0.0.0-20250718183923-645b1fa84792 // indirect
 	golang.org/x/image v0.29.0 // indirect
 	golang.org/x/mod v0.26.0 // indirect
 	golang.org/x/net v0.42.0 // indirect
