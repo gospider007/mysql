@@ -16,7 +16,7 @@ import (
 	mysqlDriver "github.com/go-sql-driver/mysql"
 	"github.com/gospider007/gson"
 	"github.com/gospider007/gtls"
-	"github.com/gospider007/requests"
+	"github.com/gospider007/netx"
 )
 
 type ClientOption struct {
@@ -130,20 +130,20 @@ func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 		if err != nil {
 			return nil, err
 		}
-		proxyAddress, err := requests.GetAddressWithUrl(proxy)
+		proxyAddress, err := netx.GetAddressWithUrl(proxy)
 		if err != nil {
 			return nil, err
 		}
 		if proxyAddress.Scheme != "socks5" {
 			return nil, fmt.Errorf("only support socks5 proxy")
 		}
-		dialer := &requests.Dialer{}
+		dialer := &netx.Dialer{}
 		mysqlDriver.RegisterDialContext("tcp", func(ctx context.Context, addr string) (net.Conn, error) {
-			remoteAdress, err := requests.GetAddressWithAddr(addr)
+			remoteAdress, err := netx.GetAddressWithAddr(addr)
 			if err != nil {
 				return nil, err
 			}
-			return dialer.Socks5TcpProxy(requests.NewResponse(ctx, requests.RequestOption{}), proxyAddress, remoteAdress)
+			return dialer.Socks5TcpProxy((&netx.DialOption{}).NewContext(ctx, false), proxyAddress, remoteAdress)
 		})
 	}
 	if option.MaxConns == 0 {
