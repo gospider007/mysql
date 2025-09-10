@@ -4,9 +4,9 @@ go 1.25.0
 
 require (
 	github.com/go-sql-driver/mysql v1.9.3
-	github.com/gospider007/gson v0.0.0-20250904025131-5ec3c322cb42
+	github.com/gospider007/gson v0.0.0-20250910015455-b90779f323c3
 	github.com/gospider007/gtls v0.0.0-20250905095945-312311a3533c
-	github.com/gospider007/netx v0.0.0-20250910013810-66321188f9f7
+	github.com/gospider007/netx v0.0.0-20250910015501-a6a463a34db7
 )
 
 require (
@@ -15,7 +15,7 @@ require (
 	github.com/caddyserver/certmagic v0.25.0 // indirect
 	github.com/caddyserver/zerossl v0.1.3 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
-	github.com/gospider007/http1 v0.0.0-20250903095546-e1c7d7825c06 // indirect
+	github.com/gospider007/http1 v0.0.0-20250910015455-2a2d4b87b968 // indirect
 	github.com/gospider007/kinds v0.0.0-20250815031133-b2282666f69c // indirect
 	github.com/gospider007/re v0.0.0-20250815031101-a57caeff73bf // indirect
 	github.com/gospider007/tools v0.0.0-20250910013838-e907a1d00f15 // indirect
