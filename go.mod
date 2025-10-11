@@ -6,7 +6,7 @@ require (
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/gospider007/gson v0.0.0-20251010080854-7673cfe49eb5
 	github.com/gospider007/gtls v0.0.0-20251011074705-bb9809acdaf1
-	github.com/gospider007/netx v0.0.0-20251011074957-991c808759a1
+	github.com/gospider007/netx v0.0.0-20251011075532-d9bd76be7013
 )
 
 require (
