@@ -5,8 +5,8 @@ go 1.25.0
 require (
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/gospider007/gson v0.0.0-20251010080854-7673cfe49eb5
-	github.com/gospider007/gtls v0.0.0-20251010080853-12699b045240
-	github.com/gospider007/netx v0.0.0-20251010080947-78fca4b0df0e
+	github.com/gospider007/gtls v0.0.0-20251011074705-bb9809acdaf1
+	github.com/gospider007/netx v0.0.0-20251011074705-7cee6fea0b62
 )
 
 require (
@@ -21,7 +21,9 @@ require (
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/gopacket v1.1.19 // indirect
 	github.com/google/pprof v0.0.0-20251007162407-5df77e3f7d1d // indirect
-	github.com/gospider007/http1 v0.0.0-20251010080853-880db86caa57 // indirect
+	github.com/gospider007/http1 v0.0.0-20251011074703-a8d2e5a53aa0 // indirect
+	github.com/gospider007/http2 v0.0.0-20251011074750-9f56e348ffb9 // indirect
+	github.com/gospider007/http3 v0.0.0-20251011074706-61a3a5e1e95c // indirect
 	github.com/gospider007/ja3 v0.0.0-20250908031106-827812269efe // indirect
 	github.com/gospider007/kinds v0.0.0-20250815031133-b2282666f69c // indirect
 	github.com/gospider007/re v0.0.0-20250815031101-a57caeff73bf // indirect
@@ -36,9 +38,10 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee // indirect
 	github.com/onsi/ginkgo/v2 v2.26.0 // indirect
+	github.com/quic-go/qpack v0.5.1 // indirect
+	github.com/quic-go/quic-go v0.55.0 // indirect
 	github.com/refraction-networking/uquic v0.0.6 // indirect
 	github.com/refraction-networking/utls v1.8.0 // indirect
-	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/tidwall/gjson v1.18.0 // indirect
 	github.com/tidwall/match v1.2.0 // indirect
 	github.com/tidwall/pretty v1.2.1 // indirect
