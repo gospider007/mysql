@@ -4,9 +4,9 @@ go 1.25.0
 
 require (
 	github.com/go-sql-driver/mysql v1.9.3
-	github.com/gospider007/gson v0.0.0-20251010080854-7673cfe49eb5
-	github.com/gospider007/gtls v0.0.0-20251015154822-5fb43b5af685
-	github.com/gospider007/netx v0.0.0-20251015155316-cc07865681cd
+	github.com/gospider007/gson v0.0.0-20251209060118-1e943dfdc4ff
+	github.com/gospider007/gtls v0.0.0-20251210003351-d6a332efe3d9
+	github.com/gospider007/netx v0.0.0-20251128080336-cc4190019f14
 )
 
 require (
@@ -21,19 +21,21 @@ require (
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/gopacket v1.1.19 // indirect
 	github.com/google/pprof v0.0.0-20251208000136-3d256cb9ff16 // indirect
-	github.com/gospider007/http1 v0.0.0-20251011074703-a8d2e5a53aa0 // indirect
-	github.com/gospider007/http2 v0.0.0-20251015151551-cf004878b757 // indirect
-	github.com/gospider007/http3 v0.0.0-20251015142250-876e4baf5c98 // indirect
-	github.com/gospider007/ja3 v0.0.0-20251015151416-4e09dd8d00e8 // indirect
+	github.com/gospider007/conf v0.0.0-20250815031235-1df45ae2e117 // indirect
+	github.com/gospider007/http1 v0.0.0-20251209060117-4268d7b65f5b // indirect
+	github.com/gospider007/http2 v0.0.0-20251210003351-fc56b1afc09e // indirect
+	github.com/gospider007/http3 v0.0.0-20251210003311-c721ab48d51a // indirect
+	github.com/gospider007/ja3 v0.0.0-20251210003307-e9b147716b45 // indirect
 	github.com/gospider007/kinds v0.0.0-20250815031133-b2282666f69c // indirect
 	github.com/gospider007/re v0.0.0-20250815031101-a57caeff73bf // indirect
-	github.com/gospider007/tools v0.0.0-20251010080832-0e5c6b21df2d // indirect
+	github.com/gospider007/tools v0.0.0-20251209055936-a37812a2b732 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.18.2 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
 	github.com/libdns/libdns v1.1.1 // indirect
 	github.com/mholt/acmez/v3 v3.1.4 // indirect
 	github.com/miekg/dns v1.1.68 // indirect
+	github.com/mileusna/useragent v1.3.5 // indirect
 	github.com/minio/minlz v1.0.1 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee // indirect
