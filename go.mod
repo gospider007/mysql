@@ -4,9 +4,9 @@ go 1.26.0
 
 require (
 	github.com/go-sql-driver/mysql v1.9.3
-	github.com/gospider007/gson v0.0.0-20260227072532-00826c662d4b
-	github.com/gospider007/gtls v0.0.0-20260302071509-051f8a76ec1d
-	github.com/gospider007/netx v0.0.0-20260302071512-8cbb650ec6a4
+	github.com/gospider007/gson v0.0.0-20260302071716-ed8e8f95afaa
+	github.com/gospider007/gtls v0.0.0-20260302071713-19903251eb98
+	github.com/gospider007/netx v0.0.0-20260302071714-e4b4359e6087
 )
 
 require (
@@ -21,11 +21,11 @@ require (
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/gopacket v1.1.19 // indirect
 	github.com/google/pprof v0.0.0-20260302011040-a15ffb7f9dcc // indirect
-	github.com/gospider007/conf v0.0.0-20260227072506-ec7f839a2b80 // indirect
-	github.com/gospider007/http1 v0.0.0-20260302071508-9c11defbe95f // indirect
-	github.com/gospider007/http2 v0.0.0-20260302071510-b351e1f2f76c // indirect
-	github.com/gospider007/http3 v0.0.0-20260302071511-ff6dda01f830 // indirect
-	github.com/gospider007/ja3 v0.0.0-20260302071507-2f71cb4eff1e // indirect
+	github.com/gospider007/conf v0.0.0-20260302071712-69e20c85b5e8 // indirect
+	github.com/gospider007/http1 v0.0.0-20260302071714-7fcceba397c6 // indirect
+	github.com/gospider007/http2 v0.0.0-20260302071714-81094c660a59 // indirect
+	github.com/gospider007/http3 v0.0.0-20260302071714-3cc8d45bb18d // indirect
+	github.com/gospider007/ja3 v0.0.0-20260302071715-a0d1c6e203e2 // indirect
 	github.com/gospider007/kinds v0.0.0-20260211060834-06a10e2431d8 // indirect
 	github.com/gospider007/re v0.0.0-20260227072205-6223d82a3dab // indirect
 	github.com/gospider007/tools v0.0.0-20260302071507-15cfe673aa78 // indirect
