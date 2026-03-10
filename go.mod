@@ -37,7 +37,7 @@ require (
 	github.com/mholt/acmez/v3 v3.1.6 // indirect
 	github.com/miekg/dns v1.1.72 // indirect
 	github.com/mileusna/useragent v1.3.5 // indirect
-	github.com/minio/minlz v1.0.1 // indirect
+	github.com/minio/minlz v1.1.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee // indirect
 	github.com/onsi/ginkgo/v2 v2.28.1 // indirect
