@@ -22,7 +22,7 @@ require (
 	github.com/google/gopacket v1.1.19 // indirect
 	github.com/google/pprof v0.0.0-20260302011040-a15ffb7f9dcc // indirect
 	github.com/gospider007/conf v0.0.0-20260310033936-7745d68902c2 // indirect
-	github.com/gospider007/http1 v0.0.0-20260310033941-93f81c875e7b // indirect
+	github.com/gospider007/http1 v0.0.0-20260310040800-ed27047fc012 // indirect
 	github.com/gospider007/http2 v0.0.0-20260310034036-9d178d972a37 // indirect
 	github.com/gospider007/http3 v0.0.0-20260310034032-c31680b8774d // indirect
 	github.com/gospider007/ja3 v0.0.0-20260310033938-34582e55a432 // indirect
