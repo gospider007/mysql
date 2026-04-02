@@ -20,7 +20,7 @@ require (
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/gopacket v1.1.19 // indirect
-	github.com/google/pprof v0.0.0-20260302011040-a15ffb7f9dcc // indirect
+	github.com/google/pprof v0.0.0-20260402051712-545e8a4df936 // indirect
 	github.com/gospider007/conf v0.0.0-20260401033035-474521835ba4 // indirect
 	github.com/gospider007/http1 v0.0.0-20260401033039-82164e36c9b1 // indirect
 	github.com/gospider007/http2 v0.0.0-20260401033141-3b953203ebaf // indirect
