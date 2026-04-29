@@ -25,10 +25,10 @@ require (
 	github.com/gospider007/http1 v0.0.0-20260428065140-5b09b787aaca // indirect
 	github.com/gospider007/http2 v0.0.0-20260429002939-b7c3c31f0516 // indirect
 	github.com/gospider007/http3 v0.0.0-20260429002909-f1cdccd3d0ab // indirect
-	github.com/gospider007/ja3 v0.0.0-20260429002909-16b8f92e41ef // indirect
+	github.com/gospider007/ja3 v0.0.0-20260429082045-f0b286273a19 // indirect
 	github.com/gospider007/kinds v0.0.0-20260211060834-06a10e2431d8 // indirect
 	github.com/gospider007/re v0.0.0-20260227072205-6223d82a3dab // indirect
-	github.com/gospider007/tools v0.0.0-20260428065035-959b2c088295 // indirect
+	github.com/gospider007/tools v0.0.0-20260429030501-b847eabb3828 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.18.5 // indirect
