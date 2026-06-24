@@ -5,8 +5,8 @@ go 1.26.0
 require (
 	github.com/go-sql-driver/mysql v1.10.0
 	github.com/gospider007/gson v0.0.0-20260620150125-dae0181045d2
-	github.com/gospider007/gtls v0.0.0-20260624065208-67b128ee38f8
-	github.com/gospider007/netx v0.0.0-20260624065208-da767d4fcb57
+	github.com/gospider007/gtls v0.0.0-20260624065332-ae2f889db99c
+	github.com/gospider007/netx v0.0.0-20260624065503-e694d8f761dd
 )
 
 require (
@@ -23,7 +23,7 @@ require (
 	github.com/google/pprof v0.0.0-20260604005048-7023385849c0 // indirect
 	github.com/gospider007/conf v0.0.0-20260620150121-7a5dd6354958 // indirect
 	github.com/gospider007/http1 v0.0.0-20260620150123-f0afa867a8e1 // indirect
-	github.com/gospider007/http2 v0.0.0-20260624065224-1eee0618ff5c // indirect
+	github.com/gospider007/http2 v0.0.0-20260624065332-216f09401756 // indirect
 	github.com/gospider007/http3 v0.0.0-20260624065259-cd463ee8b971 // indirect
 	github.com/gospider007/ja3 v0.0.0-20260624065228-e64d69460980 // indirect
 	github.com/gospider007/kinds v0.0.0-20260211060834-06a10e2431d8 // indirect
