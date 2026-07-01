@@ -7,12 +7,13 @@ require (
 	github.com/gospider007/gson v0.0.0-20260620150125-dae0181045d2
 	github.com/gospider007/gtls v0.0.0-20260629061249-c3ab7a44f9fc
 	github.com/gospider007/netx v0.0.0-20260629061343-e86287e3d480
+	github.com/gospider007/pg v0.0.0-20260629061055-f91f561edf61
 )
 
 require (
 	filippo.io/edwards25519 v1.2.0 // indirect
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
-	github.com/andybalholm/brotli v1.2.1 // indirect
+	github.com/andybalholm/brotli v1.2.2 // indirect
 	github.com/caddyserver/certmagic v0.25.4 // indirect
 	github.com/caddyserver/zerossl v0.1.5 // indirect
 	github.com/gaukas/clienthellod v0.4.2 // indirect
@@ -21,6 +22,10 @@ require (
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/gopacket v1.1.19 // indirect
 	github.com/google/pprof v0.0.0-20260604005048-7023385849c0 // indirect
+	github.com/google/uuid v1.6.0 // indirect
+	github.com/gospider007/bar v0.0.0-20260428065104-305d919b2224 // indirect
+	github.com/gospider007/blog v0.0.0-20260428065025-f3c72a6a8a13 // indirect
+	github.com/gospider007/chanx v0.0.0-20260211054348-1dfd65a36494 // indirect
 	github.com/gospider007/conf v0.0.0-20260620150121-7a5dd6354958 // indirect
 	github.com/gospider007/http1 v0.0.0-20260629061047-e1c349e8dc37 // indirect
 	github.com/gospider007/http2 v0.0.0-20260629061247-9edec78a0f0f // indirect
@@ -28,11 +33,16 @@ require (
 	github.com/gospider007/ja3 v0.0.0-20260629061105-e764ad4de5cd // indirect
 	github.com/gospider007/kinds v0.0.0-20260211060834-06a10e2431d8 // indirect
 	github.com/gospider007/re v0.0.0-20260227072205-6223d82a3dab // indirect
+	github.com/gospider007/thread v0.0.0-20260227072212-5a85c55f9cb3 // indirect
 	github.com/gospider007/tools v0.0.0-20260620145938-6b8c82109b5f // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
+	github.com/jackc/pgx/v5 v5.10.0 // indirect
+	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.18.6 // indirect
-	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
+	github.com/klauspost/compress v1.18.7 // indirect
+	github.com/klauspost/cpuid/v2 v2.4.0 // indirect
 	github.com/libdns/libdns v1.1.1 // indirect
 	github.com/mholt/acmez/v3 v3.1.6 // indirect
 	github.com/miekg/dns v1.1.72 // indirect

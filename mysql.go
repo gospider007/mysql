@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"reflect"
 	"slices"
+	"sort"
 	"strings"
 	"time"
 
@@ -17,6 +18,7 @@ import (
 	"github.com/gospider007/gson"
 	"github.com/gospider007/gtls"
 	"github.com/gospider007/netx"
+	"github.com/gospider007/pg"
 )
 
 type ClientOption struct {
@@ -34,12 +36,14 @@ type ClientOption struct {
 	Socks5Proxy string
 }
 type Client struct {
-	db *sql.DB
+	db     *sql.DB
+	option ClientOption
 }
 type Rows struct {
 	rows  *sql.Rows
 	names []string
 	kinds []reflect.Type
+	cnl   context.CancelFunc
 }
 type Result struct {
 	result sql.Result
@@ -112,6 +116,7 @@ func (obj *Rows) Map() map[string]any {
 
 // 关闭游标
 func (obj *Rows) Close() error {
+	obj.cnl()
 	return obj.rows.Close()
 }
 func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
@@ -193,7 +198,180 @@ func NewClient(ctx context.Context, options ...ClientOption) (*Client, error) {
 	db.SetConnMaxLifetime(option.MaxLifeTime)
 	db.SetMaxOpenConns(option.MaxConns)
 	db.SetMaxIdleConns(option.MaxConns)
-	return NewClientWithSqlDB(db), nil
+	c := NewClientWithSqlDB(db)
+	c.option = option
+	return c, nil
+}
+
+func (obj *Client) CreateTable(ctx context.Context, table string, columns ...pg.Column) error {
+	if len(columns) == 0 {
+		return nil
+	}
+	sort.Slice(columns, func(i, j int) bool {
+		return columns[i].Position < columns[j].Position
+	})
+	lines := []string{}
+	primarys := map[int][]string{}
+	uniques := map[int][]string{}
+	btrees := map[int][]string{}
+	for _, col := range columns {
+		// 列名加反引号，避免关键字冲突（rank/order/key 等）
+		line := fmt.Sprintf("`%s` %s", col.Name, col.Type)
+		if col.NotNull {
+			line += " NOT NULL"
+		}
+		if col.Default != "" && col.Default != "<nil>" {
+			line += fmt.Sprintf(" DEFAULT %s", col.Default)
+		}
+		if col.Desc != "" {
+			// MySQL 列注释是内联 COMMENT '...'
+			desc := strings.ReplaceAll(col.Desc, "'", "''")
+			line += fmt.Sprintf(" COMMENT '%s'", desc)
+		}
+		lines = append(lines, line)
+
+		quoted := "`" + col.Name + "`"
+		if col.Primary {
+			primarys[col.IndexGroup] = append(primarys[col.IndexGroup], quoted)
+		}
+		if col.Unique {
+			uniques[col.IndexGroup] = append(uniques[col.IndexGroup], quoted)
+		}
+		if col.Btree {
+			btrees[col.IndexGroup] = append(btrees[col.IndexGroup], quoted)
+		}
+	}
+	if len(primarys) > 1 {
+		return fmt.Errorf("the table can only have one primary key")
+	}
+
+	// 主键
+	for i, primary := range primarys {
+		if i == 0 {
+			if len(primary) > 1 {
+				return fmt.Errorf("the primary key can only have one column")
+			}
+			lines = append(lines, fmt.Sprintf("PRIMARY KEY (%s)", primary[0]))
+		} else {
+			lines = append(lines, fmt.Sprintf("PRIMARY KEY (%s)", strings.Join(primary, ", ")))
+		}
+	}
+
+	// UNIQUE：MySQL 写法 UNIQUE KEY name (col)，放在表内
+	for i, unique := range uniques {
+		if i == 0 {
+			for _, u := range unique {
+				lines = append(lines, fmt.Sprintf("UNIQUE KEY `%s` (%s)", strings.Trim(u, "`"), u))
+			}
+		} else {
+			cols := stripBackticks(unique)
+			lines = append(lines, fmt.Sprintf("UNIQUE KEY `%s` (%s)", "uniq_"+strings.Join(cols, "_"), strings.Join(unique, ", ")))
+		}
+	}
+
+	// 普通 B-Tree 索引：MySQL 用 inline KEY 即可，不需要 USING btree
+	for i, btree := range btrees {
+		if i == 0 {
+			for _, b := range btree {
+				lines = append(lines, fmt.Sprintf("KEY `idx_%s_%s` (%s)", table, strings.Trim(b, "`"), b))
+			}
+		} else {
+			cols := stripBackticks(btree)
+			lines = append(lines, fmt.Sprintf("KEY `idx_%s_%s` (%s)", table, strings.Join(cols, "_"), strings.Join(btree, ", ")))
+		}
+	}
+
+	sql := fmt.Sprintf(
+		"CREATE TABLE IF NOT EXISTS `%s` (\n%s\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;",
+		table,
+		"  "+strings.Join(lines, ",\n  "),
+	)
+	_, err := obj.Exec(ctx, sql)
+	return err
+}
+
+// 去掉 “ ` “ 包裹，便于拼索引名
+func stripBackticks(quoted []string) []string {
+	out := make([]string, len(quoted))
+	for i, q := range quoted {
+		out[i] = strings.Trim(q, "`")
+	}
+	return out
+}
+func (obj *Client) Tables(preCtx context.Context) ([]string, error) {
+	dbName := obj.option.DbName
+	if dbName == "" {
+		return nil, fmt.Errorf("DbName is empty")
+	}
+	rows, err := obj.Finds(preCtx,
+		`SELECT table_name AS table_name
+		   FROM information_schema.tables
+		  WHERE table_schema = ? AND table_type = 'BASE TABLE'
+		  ORDER BY table_name;`, dbName)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	result := []string{}
+	for row := range rows.Range() {
+		if table, _ := row["table_name"].(string); table != "" {
+			result = append(result, table)
+		}
+	}
+	return result, nil
+}
+func (obj *Client) Fields(preCtx context.Context, table string) ([]pg.Column, error) {
+	if preCtx == nil {
+		preCtx = context.TODO()
+	}
+	sql := `SELECT
+    ORDINAL_POSITION AS position,
+    COLUMN_NAME AS name,
+    COLUMN_TYPE AS type,
+    IF(IS_NULLABLE = 'NO', 'true', 'false') AS not_null,
+    COLUMN_DEFAULT AS "default",
+    CASE
+        WHEN COLUMN_KEY = 'PRI' THEN 'PRIMARY KEY'
+        WHEN COLUMN_KEY = 'UNI' THEN 'UNIQUE'
+        ELSE NULL
+    END AS constrainttype,
+    IF(COLUMN_KEY = 'PRI', 'true', 'false') AS "primary",
+    IF(COLUMN_KEY = 'UNI', 'true', 'false') AS "unique",
+    IF(EXTRA LIKE '%auto_increment%', 'true', 'false') AS auto_increment
+FROM information_schema.COLUMNS
+WHERE TABLE_SCHEMA = DATABASE()
+  AND TABLE_NAME = ?
+ORDER BY ORDINAL_POSITION;`
+	row, err := obj.Finds(preCtx, sql, table)
+	if err != nil {
+		return nil, err
+	}
+	defer row.Close()
+	datas := []pg.Column{}
+	for data := range row.Range() {
+		var colum pg.Column
+		for key, val := range data {
+			if ival, ok := val.(string); ok {
+				if ival == "true" {
+					data[key] = true
+				}
+				if ival == "false" {
+					data[key] = false
+				}
+				if key == "type" && strings.HasPrefix(ival, "int") {
+					data[key] = "INT"
+				}
+			}
+		}
+		if _, err = gson.Decode(data, &colum); err != nil {
+			return nil, err
+		}
+		datas = append(datas, colum)
+	}
+	return datas, nil
+}
+func (obj *Client) DBName() string {
+	return obj.option.DbName
 }
 
 func NewClientWithSqlDB(db *sql.DB) *Client {
@@ -279,16 +457,19 @@ func (obj *Client) parseInserts(data ...any) (string, string, []any, error) {
 }
 
 // finds   ?  is args
-func (obj *Client) Finds(ctx context.Context, query string, args ...any) (*Rows, error) {
-	if ctx == nil {
-		ctx = context.TODO()
+func (obj *Client) Finds(preCtx context.Context, query string, args ...any) (*Rows, error) {
+	if preCtx == nil {
+		preCtx = context.TODO()
 	}
+	ctx, cnl := context.WithCancel(preCtx)
 	row, err := obj.db.QueryContext(ctx, query, args...)
 	if err != nil {
+		cnl()
 		return nil, err
 	}
 	cols, err := row.ColumnTypes()
 	if err != nil {
+		cnl()
 		return nil, err
 	}
 	names := make([]string, len(cols))
@@ -301,6 +482,7 @@ func (obj *Client) Finds(ctx context.Context, query string, args ...any) (*Rows,
 		names: names,
 		kinds: kinds,
 		rows:  row,
+		cnl:   cnl,
 	}, err
 }
 
