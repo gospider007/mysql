@@ -4,10 +4,10 @@ go 1.26.0
 
 require (
 	github.com/go-sql-driver/mysql v1.10.0
-	github.com/gospider007/gson v0.0.0-20260701093602-9533c9d11ea4
-	github.com/gospider007/gtls v0.0.0-20260701093634-aa5d784a7e45
-	github.com/gospider007/netx v0.0.0-20260701093718-f9cfda2d6d5e
-	github.com/gospider007/pg v0.0.0-20260701093648-73cc01a286ed
+	github.com/gospider007/gson v0.0.0-20260701134803-28a6900dbb8f
+	github.com/gospider007/gtls v0.0.0-20260701134815-67d9afc0ff87
+	github.com/gospider007/netx v0.0.0-20260701134814-a2815492e064
+	github.com/gospider007/pg v0.0.0-20260701134802-c50aa91c5951
 )
 
 require (
@@ -26,22 +26,22 @@ require (
 	github.com/gospider007/bar v0.0.0-20260428065104-305d919b2224 // indirect
 	github.com/gospider007/blog v0.0.0-20260428065025-f3c72a6a8a13 // indirect
 	github.com/gospider007/chanx v0.0.0-20260211054348-1dfd65a36494 // indirect
-	github.com/gospider007/conf v0.0.0-20260701093556-1cdb10e9174e // indirect
-	github.com/gospider007/http1 v0.0.0-20260701093602-3c3584e4b42c // indirect
+	github.com/gospider007/conf v0.0.0-20260701134758-4d45fe095576 // indirect
+	github.com/gospider007/http1 v0.0.0-20260701134803-4d42dad74d65 // indirect
 	github.com/gospider007/http2 v0.0.0-20260701093641-89394848e728 // indirect
-	github.com/gospider007/http3 v0.0.0-20260701093625-d1322648a0a7 // indirect
-	github.com/gospider007/ja3 v0.0.0-20260701093602-68c2a89d7a41 // indirect
+	github.com/gospider007/http3 v0.0.0-20260701134815-b5dfa55f0907 // indirect
+	github.com/gospider007/ja3 v0.0.0-20260701134818-70bfb81a6fe2 // indirect
 	github.com/gospider007/kinds v0.0.0-20260211060834-06a10e2431d8 // indirect
 	github.com/gospider007/re v0.0.0-20260227072205-6223d82a3dab // indirect
 	github.com/gospider007/thread v0.0.0-20260227072212-5a85c55f9cb3 // indirect
-	github.com/gospider007/tools v0.0.0-20260701093347-1b919e409385 // indirect
+	github.com/gospider007/tools v0.0.0-20260701134802-0986e7972cab // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/pgx/v5 v5.10.0 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.18.7 // indirect
+	github.com/klauspost/compress v1.19.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.4.0 // indirect
 	github.com/libdns/libdns v1.1.1 // indirect
 	github.com/mholt/acmez/v3 v3.1.6 // indirect
