@@ -4,10 +4,10 @@ go 1.26.0
 
 require (
 	github.com/go-sql-driver/mysql v1.10.0
-	github.com/gospider007/gson v0.0.0-20260713094922-5013cda49f08
-	github.com/gospider007/gtls v0.0.0-20260713094947-9436cdd4bf9a
-	github.com/gospider007/netx v0.0.0-20260713095034-89ff4169196d
-	github.com/gospider007/pg v0.0.0-20260713095002-7c2ded146589
+	github.com/gospider007/gson v0.0.0-20260713095134-476e86d28131
+	github.com/gospider007/gtls v0.0.0-20260713095134-a3866d30c09c
+	github.com/gospider007/netx v0.0.0-20260713095134-2067252adfd6
+	github.com/gospider007/pg v0.0.0-20260713095134-5d5fa0f0f9cb
 )
 
 require (
@@ -26,15 +26,15 @@ require (
 	github.com/gospider007/bar v0.0.0-20260428065104-305d919b2224 // indirect
 	github.com/gospider007/blog v0.0.0-20260428065025-f3c72a6a8a13 // indirect
 	github.com/gospider007/chanx v0.0.0-20260211054348-1dfd65a36494 // indirect
-	github.com/gospider007/conf v0.0.0-20260713094914-4b2f48fa0590 // indirect
-	github.com/gospider007/http1 v0.0.0-20260713094922-f6fc4ee87588 // indirect
-	github.com/gospider007/http2 v0.0.0-20260713094947-0d7d5137720b // indirect
-	github.com/gospider007/http3 v0.0.0-20260713094947-2a037493c35d // indirect
-	github.com/gospider007/ja3 v0.0.0-20260713094922-60a0af6ae2fa // indirect
+	github.com/gospider007/conf v0.0.0-20260713095127-f62bc65e35dd // indirect
+	github.com/gospider007/http1 v0.0.0-20260713095134-e988d07c0023 // indirect
+	github.com/gospider007/http2 v0.0.0-20260713095134-b6b84ccf5d5f // indirect
+	github.com/gospider007/http3 v0.0.0-20260713095134-83c757e70998 // indirect
+	github.com/gospider007/ja3 v0.0.0-20260713095134-1d36c9d2dea2 // indirect
 	github.com/gospider007/kinds v0.0.0-20260211060834-06a10e2431d8 // indirect
 	github.com/gospider007/re v0.0.0-20260227072205-6223d82a3dab // indirect
 	github.com/gospider007/thread v0.0.0-20260227072212-5a85c55f9cb3 // indirect
-	github.com/gospider007/tools v0.0.0-20260713094752-adf752771c22 // indirect
+	github.com/gospider007/tools v0.0.0-20260713095134-a0365783c81c // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
