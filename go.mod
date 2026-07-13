@@ -34,7 +34,7 @@ require (
 	github.com/gospider007/kinds v0.0.0-20260211060834-06a10e2431d8 // indirect
 	github.com/gospider007/re v0.0.0-20260227072205-6223d82a3dab // indirect
 	github.com/gospider007/thread v0.0.0-20260227072212-5a85c55f9cb3 // indirect
-	github.com/gospider007/tools v0.0.0-20260709025734-e176d9ab209e // indirect
+	github.com/gospider007/tools v0.0.0-20260713094752-adf752771c22 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
