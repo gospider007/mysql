@@ -6,7 +6,7 @@ require (
 	github.com/go-sql-driver/mysql v1.10.0
 	github.com/gospider007/gson v0.0.0-20260713095227-03d10a4e9883
 	github.com/gospider007/gtls v0.0.0-20260715060236-764fcbd9d8e5
-	github.com/gospider007/netx v0.0.0-20260715060314-e5d016f95e9a
+	github.com/gospider007/netx v0.0.0-20260715073713-8effb6f66b98
 	github.com/gospider007/pg v0.0.0-20260713095318-462247c1da4a
 )
 
@@ -33,8 +33,8 @@ require (
 	github.com/gospider007/ja3 v0.0.0-20260713095230-15a15c149eba // indirect
 	github.com/gospider007/kinds v0.0.0-20260211060834-06a10e2431d8 // indirect
 	github.com/gospider007/re v0.0.0-20260227072205-6223d82a3dab // indirect
-	github.com/gospider007/thread v0.0.0-20260227072212-5a85c55f9cb3 // indirect
-	github.com/gospider007/tools v0.0.0-20260713095134-a0365783c81c // indirect
+	github.com/gospider007/thread v0.0.0-20260715073649-94b15f3ca99e // indirect
+	github.com/gospider007/tools v0.0.0-20260715073657-142e5b88d395 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
