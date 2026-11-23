@@ -5,9 +5,9 @@ go 1.27.0
 require (
 	github.com/go-sql-driver/mysql v1.10.2
 	github.com/gospider007/gson v0.0.0-20261123061643-ef4204d96306
-	github.com/gospider007/gtls v0.0.0-20261123061644-d60c70343c9d
-	github.com/gospider007/netx v0.0.0-20261123061644-118331162438
-	github.com/gospider007/pg v0.0.0-20261123061645-9164a4fc271e
+	github.com/gospider007/gtls v0.0.0-20261123061717-787bf8ad3f6e
+	github.com/gospider007/netx v0.0.0-20261123061718-db6eaf278d43
+	github.com/gospider007/pg v0.0.0-20261123061729-8b5e43804d2a
 )
 
 require (
